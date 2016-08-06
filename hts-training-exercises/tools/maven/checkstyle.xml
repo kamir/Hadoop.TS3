@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright 2015 data Artisans GmbH
+Copyright 2016 Cloudera Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -50,19 +50,19 @@ limitations under the License.
 
 		<module name="FileContentsHolder"/>
 
-	<!--	<module name="ConstantName" />
+<!--	<module name="ConstantName" />
 		<module name="LocalFinalVariableName" />
 		<module name="LocalVariableName" />
 		<module name="MemberName" />
 		<module name="MethodName" />
 		<module name="PackageName" />
 		<module name="ParameterName" />
-  	<module name="StaticVariableName" />
+  	    <module name="StaticVariableName" />
 		<module name="TypeName" />
 		<module name="AvoidStarImport" />
 		<module name="RedundantImport" />
 		<module name="UnusedImports" />
-	  <module name="MethodLength" />
+	    <module name="MethodLength" />
 		<module name="ParameterNumber" />
 		<module name="AvoidNestedBlocks" />
 		<module name="EmptyBlock" />
@@ -81,5 +81,6 @@ limitations under the License.
 		<module name="VisibilityModifier" />
 		<module name="ArrayTypeStyle" />
 		<module name="UpperEll" /> -->
+		
 	</module>
 </module>
