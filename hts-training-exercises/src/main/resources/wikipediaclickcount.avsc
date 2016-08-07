@@ -1,7 +1,7 @@
 { "doc" : "Avro-Record based on the description on http://dumps.wikimedia.org/other/pagecounts-raw/",
   "type" : "record",
   "name" : "ClickCount",
-  "namespace" : "org.apache.crunchts.types.wikipedia.analysis",
+  "namespace" : "com.cloudera.tsa.data",
   "fields" : [ 
   {
     "name" : "timestamp",

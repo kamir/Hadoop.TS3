@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-import org.apache.crunchts.types.Event;
-import org.apache.crunchts.types.EventTSRecord;
+import com.cloudera.tsa.data.Event;
+import com.cloudera.tsa.data.EventTSRecord;
 
 public class EventTS extends AbstractTS {
 	

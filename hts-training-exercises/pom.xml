@@ -36,7 +36,7 @@
         <sesame.version>2.7.1</sesame.version>
         <httpclient.version>3.1</httpclient.version>
         <avro.version>1.7.4</avro.version>
-        <crunch.version>0.11.0-hadoop2</crunch.version>
+        <crunch.version>0.14.0</crunch.version>
         <guava.version>11.0.2</guava.version>
         
         <commonscodec.version>1.6</commonscodec.version>
@@ -51,6 +51,30 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
             <type>jar</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.apache.crunch</groupId>
+            <artifactId>crunch-core</artifactId>
+            <version>${crunch.version}</version>
         </dependency>
         
         <dependency>
@@ -162,6 +186,58 @@
                     </jvmArgs>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${mavenassembly.version}</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/hadoop-job.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <manifest>
+                            <!-- What is the Main-Class to run? -->
+                            <mainClass>org.apache.crunchts.CrunchTSApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/resources/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/target/generated-sources/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>${maveneclipse.version}</version>
+                <configuration>
+                    <downloadSources>false</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -220,8 +296,6 @@
                 </configuration>
             </plugin>
 
-
-
             <!--plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
@@ -251,7 +325,7 @@
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
-    
+        
         <repository>
             <snapshots>
                 <enabled>false</enabled>
@@ -260,7 +334,9 @@
             <name>Maven Repository Switchboard</name>
             <url>http://repo1.maven.org/maven2</url>
         </repository>
+        
     </repositories>
+    
     <pluginRepositories>
         <pluginRepository>
             <releases>
@@ -274,4 +350,5 @@
             <url>http://repo1.maven.org/maven2</url>
         </pluginRepository>
     </pluginRepositories>
+
 </project>

@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.util.Hashtable;
 import java.util.Iterator;
-import org.apache.crunchts.types.EventTSRecord;
+import com.cloudera.tsa.data.EventTSRecord;
 
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
@@ -19,8 +19,10 @@ import org.apache.crunch.io.From;
 import org.apache.crunch.io.avro.AvroFileTarget;
 import org.apache.crunch.types.avro.Avros;
 import org.apache.crunch.util.CrunchTool;
-import org.apache.crunchts.pojo.ContEquidistTS;
-import org.apache.crunchts.ptypes.EventTS;
+
+//import org.apache.crunchts.pojo.ContEquidistTS;
+//import org.apache.crunchts.ptypes.EventTS;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -211,46 +213,46 @@ public class CalcTSBProfile extends CrunchTool {
         return pro;
     }
 
-    private PCollection<EventTSRecord> extractContEquidistTS(
-            PCollection<ContEquidistTS> tsb) {
-
-        return tsb.parallelDo(new DoFn<ContEquidistTS, EventTSRecord>() {
-            @Override
-            public void process(ContEquidistTS ts, Emitter<EventTSRecord> emitter) {
-
-                VectorWritable v = ts.getData();
-                EventTS out = new EventTS();
-
-                emitter.emit(out.getRecord());
-            }
-        },
-                Avros.records(EventTSRecord.class)
-        );
-    }
-
-    /**
-     *
-     * @param tsb
-     * @return
-     */
-    private PCollection<ContEquidistTS> covertFromVectorWritables(PTable<Text, VectorWritable> tsb) {
-
-        return tsb.parallelDo(new DoFn<Pair<Text, VectorWritable>, ContEquidistTS>() {
-            @Override
-            public void process(Pair<Text, VectorWritable> ts, Emitter<ContEquidistTS> emitter) {
-
-                String key = ts.first().toString();
-                VectorWritable v = ts.second();
-
-                ContEquidistTS out = new ContEquidistTS();
-                out.setData(v, key, 0);
-
-                emitter.emit(out);
-            }
-        },
-                Avros.reflects(ContEquidistTS.class));
-
-    }
+//    private PCollection<EventTSRecord> extractContEquidistTS(
+//            PCollection<ContEquidistTS> tsb) {
+//
+//        return tsb.parallelDo(new DoFn<ContEquidistTS, EventTSRecord>() {
+//            @Override
+//            public void process(ContEquidistTS ts, Emitter<EventTSRecord> emitter) {
+//
+//                VectorWritable v = ts.getData();
+//                EventTS out = new EventTS();
+//
+//                emitter.emit(out.getRecord());
+//            }
+//        },
+//                Avros.records(EventTSRecord.class)
+//        );
+//    }
+//
+//    /**
+//     *
+//     * @param tsb
+//     * @return
+//     */
+//    private PCollection<ContEquidistTS> covertFromVectorWritables(PTable<Text, VectorWritable> tsb) {
+//
+//        return tsb.parallelDo(new DoFn<Pair<Text, VectorWritable>, ContEquidistTS>() {
+//            @Override
+//            public void process(Pair<Text, VectorWritable> ts, Emitter<ContEquidistTS> emitter) {
+//
+//                String key = ts.first().toString();
+//                VectorWritable v = ts.second();
+//
+//                ContEquidistTS out = new ContEquidistTS();
+//                out.setData(v, key, 0);
+//
+//                emitter.emit(out);
+//            }
+//        },
+//                Avros.reflects(ContEquidistTS.class));
+//
+//    }
 
     public PCollection<Double> countAllClicks(PTable<Text, VectorWritable> ts) {
         return ts.parallelDo("calc total number of clicks", new SimpleClickCountFn(), Avros.doubles());

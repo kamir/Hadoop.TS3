@@ -1,5 +1,6 @@
 package com.cloudera.crunchts.simple;
 
+import com.cloudera.hts.utils.wikipedia.TimeStampTool;
 import java.util.HashSet;
 
 import org.apache.crunch.impl.mr.run.*;
@@ -11,7 +12,7 @@ import org.apache.crunch.PipelineResult;
 import org.apache.crunch.io.From;
 import org.apache.crunch.types.avro.Avros;
 import org.apache.crunch.util.CrunchTool;
-import org.apache.crunchts.types.wikipedia.analysis.ClickCount;
+import com.cloudera.tsa.data.ClickCount;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -114,7 +115,7 @@ public class ImportClickCountData extends CrunchTool {
                         fileName = ((CombineFileSplit) inputSplit).getPaths()[0].getName();
                     }
                    
-                    timestamp = de.bitocean.util.wikipedia.TimeStampTool.getTimeInMillis(fileName);
+                    timestamp = TimeStampTool.getTimeInMillis(fileName);
                 } 
                 catch (ClassCastException e) {
                     e.printStackTrace();

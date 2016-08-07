@@ -1,5 +1,5 @@
 {
-  "namespace" : "de.bitocean.data",
+  "namespace" : "com.cloudera.tsa.data",
   "name" : "WebResource",
   "type" : "record",
 

@@ -19,6 +19,12 @@ import org.apache.hadoopts.hadoopts.core.TSBucket;
  * https://gallery.cortanaintelligence.com/Competition/Decoding-Brain-Signals-2?share=1
  *
  * @author kamir
+ * 
+ * Inspiration for the project: Peter Whitney, Cloudera
+ * 
+ * Goal: Demonstration of a use-case for time series based studies on 
+ *       physiological data using Hadoop.TS3
+ * 
  */
 public class ModelTesterCortanaDBS {
 

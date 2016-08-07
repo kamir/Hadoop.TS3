@@ -1,6 +1,6 @@
 {
  "type"      : "record",
- "namespace" : "org.apache.crunchts.types",
+ "namespace" : "com.cloudera.tsa.data",
  "name"      : "EventTSRecord",
  "fields": [
       {

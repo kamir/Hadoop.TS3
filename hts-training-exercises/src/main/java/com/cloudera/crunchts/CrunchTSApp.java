@@ -103,12 +103,14 @@ public class CrunchTSApp extends FsShell {
 
         if (fs instanceof DistributedFileSystem) {
 
-            DistributedFileSystem dfs = (DistributedFileSystem) fs;
-            FsStatus ds = dfs.getStatus();
+            DistributedFileSystem dfs = (DistributedFileSystem) fs; 
+            
+            
 
-            long capacity = ds.getCapacity();
-            long used = ds.getUsed();
-            long remaining = ds.getRemaining();
+            long capacity = dfs.getDiskStatus().getCapacity();
+            long used = dfs.getDiskStatus().getDfsUsed();
+            long remaining = dfs.getDiskStatus().getRemaining();
+            
             long presentCapacity = used + remaining;
 
             System.out.println("FS Configured Capacity: " + capacity + " ("

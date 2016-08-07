@@ -1,6 +1,6 @@
 package com.cloudera.hts.utils.wikipedia;
-
-import de.bitocean.crunchts.simple.*;
+ 
+import com.cloudera.crunchts.simple.SimpleClickCountFn;
 import java.util.HashSet;
 
 import org.apache.crunch.impl.mr.run.*;
@@ -19,8 +19,9 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.mahout.math.VectorWritable;
 import com.google.common.base.Supplier;
+ 
+import com.cloudera.tsa.data.*;
 
-import de.bitocean.data.WebResource; 
 import org.apache.crunch.io.text.TextFileTarget;
 import org.apache.crunch.lib.Shard;
 import org.apache.hadoop.mapreduce.lib.input.CombineFileSplit;
@@ -112,7 +113,7 @@ public class WebResourceBucketNodeDegree extends CrunchTool {
                         fileName = ((CombineFileSplit) inputSplit).getPaths()[0].getName();
                     }
                    
-                    timestamp = de.bitocean.util.wikipedia.TimeStampTool.getTimeInMillis(fileName);
+                    timestamp = TimeStampTool.getTimeInMillis(fileName);
                 } 
                 catch (ClassCastException e) {
                     e.printStackTrace();

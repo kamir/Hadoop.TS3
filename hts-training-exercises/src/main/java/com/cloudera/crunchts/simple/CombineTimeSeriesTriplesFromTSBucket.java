@@ -21,7 +21,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.mahout.math.VectorWritable;
 import com.cloudera.crunchts.pojo.ContEquidistTS;
-import org.apache.crunchts.types.EventTSRecord;
+import com.cloudera.tsa.data.EventTSRecord;
  
 /**
  * Crunch time series processing pipeline.
