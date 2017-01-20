@@ -12,6 +12,7 @@ import org.apache.hadoopts.app.bucketanalyser.TSBucketTransformation;
 import org.apache.hadoopts.chart.simple.MultiChart;
 import org.apache.hadoopts.data.series.Messreihe;
 import org.apache.hadoopts.hadoopts.core.TSBucket;
+import org.apache.hadoopts.hadoopts.buckets.TSBASE;
 
 /**
  * A tool for testing the Brain Signal Classification
@@ -28,6 +29,19 @@ import org.apache.hadoopts.hadoopts.core.TSBucket;
  */
 public class ModelTesterCortanaDBS {
 
+    
+    
+    
+    
+    public static String basefolder = "/Volumes/DS-Tools/TSDB/";
+    public static String exp = "P001/TSB/";
+    
+    public static String base = null;
+
+    
+    
+    
+    
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         MacroTrackerFrame.init("Cortana - BSD");
@@ -36,22 +50,28 @@ public class ModelTesterCortanaDBS {
         String label_of_EXPERIMENT = "CN";
         String subLabel = "BSD";
 
-        String base = "./tsb_" + System.currentTimeMillis();
+        // Time Series Database
+        
+        base = basefolder + exp + "tsb_" + System.currentTimeMillis() + "/";
+        
         File BASE = new File(base);
         BASE.mkdirs();
 
         Messreihe[][] fullSeries = new Messreihe[64][4];
 
-        String CSVFN = "/Users/kamir/Downloads/ecog_train_with_labels.csv";
+        // CSV file name
+        String CSVFN = "/Volumes/DS-Tools/DATASETS/P001/raw/ecog_train_with_labels.csv";
 
         FileReader fr = new FileReader(CSVFN);
         BufferedReader br = new BufferedReader(fr);
 
         for (int j = 0; j < 4; j++) {
 
-            String person = base + "/p" + (j + 1);
+            String person = base + "/p" + (j);
+            
             File PERSON_im = new File(person + "/image");
             File PERSON_bl = new File(person + "/blank");
+            
             PERSON_im.mkdirs();
             PERSON_bl.mkdirs();
 
@@ -97,6 +117,8 @@ public class ModelTesterCortanaDBS {
         System.out.println(">>> Step 3");
 
         int PATIENT = 0;
+
+        System.out.println(">>> length pf series: ");
         System.out.println(fullSeries[0][PATIENT].yValues.size());
         
         int eMax = 20; // nr of pairs
@@ -188,25 +210,31 @@ class BrainState {
     public void store() throws IOException {
 
         if ( vmr.size() == 0 ) return;
-        
        
         TSBucket b = new TSBucket();
         
         String label = patient;
         
-        b.createBucketFromVectorOfSeries(label, cat, vmr);
-        
         String comment = "";
         
-        String folder = "./"+label + "_" + cat;
+        String folder = ModelTesterCortanaDBS.base + label + "_" + cat;
         String fn = nr + "_raw";
         File f = new File( folder );
         f.mkdir();
         
-        MultiChart.store(vmr, label, "y(t)", "t", true, folder, fn, comment);
+        TSBASE.BASE_PATH = f.getAbsolutePath();
+        
+        System.out.println( ">>> folder: " + f.getAbsolutePath() );
+        
+        Vector<Messreihe> vmrNORM = new Vector<Messreihe>();
+        for( Messreihe mr : vmr ) {
+            vmrNORM.add( mr.normalizeToStdevIsOne() );
+        }
+        
+        b.createBucketFromVectorOfSeries(label, cat, vmrNORM);
+        MultiChart.store(vmrNORM, label, "y_NORM(t)", "t", false, folder, fn, comment);
         
         storedStates++;
-
         
     }
         

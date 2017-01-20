@@ -111,7 +111,9 @@ public class BrainSignalCorrelator implements ICorrelator, ActionListener {
 
             bw.flush();
             bw.close();
-        } catch (Exception ex) {
+            
+        } 
+        catch (Exception ex) {
             ex.printStackTrace();
         }
 
