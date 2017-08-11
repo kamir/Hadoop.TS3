@@ -84,11 +84,11 @@
             <version>5.5.0</version>  <!-- Or the CM version you have -->
         </dependency>
         
-        <dependency>
+        <!--dependency>
             <groupId>com.cloudera</groupId>
             <artifactId>WikiExplorer.NG</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>com.cloudera</groupId>
@@ -149,6 +149,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.7</version>
         </dependency>
+        
     </dependencies>
 
     <build>
